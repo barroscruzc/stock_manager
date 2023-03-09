@@ -4,33 +4,52 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.com.univirtus.model.enums.Gender;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
-@Table
 public class Client implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	@Column(nullable = false, length = 50)
 	private String name;
+	@Column(length = 11)
+	private String cpf;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@Column(name = "birth_date", columnDefinition = "DATE")
 	private LocalDate birthDate;
+	@Column(length = 10)
 	private String phone;
+	@Column(length = 11)
 	private String mobile;
+	@Column(length = 50)
 	private String email;
 	private boolean active;
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	public Client() {
 		
 	}
 
-	public Client(Long id, String name, LocalDate birthDate, String phone, String mobile, String email, boolean active,
+	public Client(Long id, String name, String cpf, LocalDate birthDate, String phone, String mobile, String email, boolean active,
 			Gender gender) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.cpf = cpf;
 		this.birthDate = birthDate;
 		this.phone = phone;
 		this.mobile = mobile;
@@ -55,6 +74,14 @@ public class Client implements Serializable {
 		this.name = name;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
@@ -119,6 +146,7 @@ public class Client implements Serializable {
 		Client other = (Client) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
+
 	
 }
