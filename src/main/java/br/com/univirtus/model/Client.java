@@ -5,7 +5,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import br.com.univirtus.model.enums.Gender;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table
 public class Client implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
