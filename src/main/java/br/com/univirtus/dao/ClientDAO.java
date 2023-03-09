@@ -20,6 +20,7 @@ public class ClientDAO implements CRUD<Client, Long>{
 		return entityManager.find(Client.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Client> findAll() {
 		Query query = entityManager.createQuery("Select c from Client c");
