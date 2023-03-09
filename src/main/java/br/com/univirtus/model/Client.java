@@ -1,17 +1,17 @@
-package model;
+package br.com.univirtus.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
-import model.enums.Gender;
+import br.com.univirtus.model.enums.Gender;
 
 public class Client implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
-	private Date birthDate;
+	private LocalDate birthDate;
 	private String phone;
 	private String mobile;
 	private String email;
@@ -22,7 +22,7 @@ public class Client implements Serializable {
 		
 	}
 
-	public Client(Long id, String name, Date birthDate, String phone, String mobile, String email, boolean active,
+	public Client(Long id, String name, LocalDate birthDate, String phone, String mobile, String email, boolean active,
 			Gender gender) {
 		super();
 		this.id = id;
@@ -51,11 +51,11 @@ public class Client implements Serializable {
 		this.name = name;
 	}
 
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
