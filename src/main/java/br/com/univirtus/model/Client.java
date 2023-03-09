@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import br.com.univirtus.model.enums.Gender;
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Client implements Serializable {
@@ -23,20 +23,28 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
 	@Column(nullable = false, length = 50)
 	private String name;
-	@Column(length = 11)
+	
+	@Column(length = 14)
 	private String cpf;
+	
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@Column(name = "birth_date", columnDefinition = "DATE")
 	private LocalDate birthDate;
-	@Column(length = 10)
+	
+	@Column(length = 14)
 	private String phone;
-	@Column(length = 11)
+	
+	@Column(length = 15)
 	private String mobile;
+	
 	@Column(length = 50)
 	private String email;
+	
 	private boolean active;
+	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
