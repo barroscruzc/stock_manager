@@ -49,7 +49,7 @@ public class Client implements Serializable {
 	private Gender gender;
 	
 	public Client() {
-		
+		this.active = true;
 	}
 
 	public Client(Long id, String name, String cpf, LocalDate birthDate, String phone, String mobile, String email, boolean active,
