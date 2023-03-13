@@ -3,14 +3,17 @@ package br.com.univirtus.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.univirtus.bo.ClientBO;
 import br.com.univirtus.model.Client;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/clients")
@@ -26,9 +29,16 @@ public class ClientController {
 	}
 	
 	@RequestMapping(path="", method=RequestMethod.POST)
-	public String save(@ModelAttribute Client client) {
-		bo.insert(client);
-		return "/clients/form";
+	public String save(@Valid @ModelAttribute Client client, BindingResult result, RedirectAttributes attr) {
+		if(result.hasErrors()) {
+			return "clients/form";
+		}
+		else if (client.getId() == null) {
+			bo.insert(client);
+		} else {
+			bo.update(client);
+		}
+		return "redirect:/clients";
 	}
 	
 	@RequestMapping(path = "", method=RequestMethod.GET)

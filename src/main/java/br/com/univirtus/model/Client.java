@@ -4,16 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.com.univirtus.model.enums.Gender;
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Client implements Serializable {
@@ -25,27 +30,35 @@ public class Client implements Serializable {
 	private Long id;
 	
 	@Column(nullable = false, length = 50)
+	@NotBlank(message = "Informe o nome")
+	@Size(min = 3, max = 50)
 	private String name;
 	
 	@Column(length = 14)
+	@CPF(message="CPF inválido!")
 	private String cpf;
 	
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@Column(nullable=false, name = "birth_date", columnDefinition = "DATE")
+	@NotNull(message = "Informe a data de nascimento!")
 	private LocalDate birthDate;
 	
 	@Column(length = 14)
+	@Size(min = 10, max = 14)
 	private String phone;
 	
 	@Column(length = 15)
+	@Size(min = 10, max = 15)
 	private String mobile;
 	
 	@Column(length = 50)
+	@Email(message="Endereço de e-mail inválido")
 	private String email;
 	
 	private boolean active;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "Informe o gênero!")
 	private Gender gender;
 	
 	public Client() {
