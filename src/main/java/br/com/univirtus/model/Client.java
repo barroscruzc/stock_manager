@@ -31,7 +31,7 @@ public class Client implements Serializable {
 	private String cpf;
 	
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@Column(name = "birth_date", columnDefinition = "DATE")
+	@Column(nullable=false, name = "birth_date", columnDefinition = "DATE")
 	private LocalDate birthDate;
 	
 	@Column(length = 14)
@@ -155,6 +155,10 @@ public class Client implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
-
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + ", cpf=" + cpf + ", birthDate=" + birthDate + ", phone=" + phone
+				+ ", mobile=" + mobile + ", email=" + email + ", active=" + active + ", gender=" + gender + "]";
+	}
 	
 }
