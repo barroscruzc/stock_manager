@@ -30,8 +30,8 @@ public class Client implements Serializable {
 	private Long id;
 	
 	@Column(nullable = false, length = 50)
-	@NotBlank(message = "Informe o nome")
-	@Size(min = 3, max = 50)
+	@NotBlank(message = "Informe o nome completo!")
+	@Size(min = 3, max = 50, message="Nome deve conter entre 3 a 50 caracteres")
 	private String name;
 	
 	@Column(length = 14)
