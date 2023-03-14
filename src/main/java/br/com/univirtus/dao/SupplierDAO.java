@@ -2,11 +2,16 @@ package br.com.univirtus.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.univirtus.model.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
+@Repository
+@Transactional
 public class SupplierDAO implements CRUD<Supplier, Long>{
 
 	@PersistenceContext

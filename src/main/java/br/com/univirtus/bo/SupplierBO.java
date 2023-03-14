@@ -3,11 +3,13 @@ package br.com.univirtus.bo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.univirtus.dao.CRUD;
 import br.com.univirtus.dao.SupplierDAO;
 import br.com.univirtus.model.Supplier;
 
+@Service
 public class SupplierBO implements CRUD<Supplier, Long>{
 
 	@Autowired
