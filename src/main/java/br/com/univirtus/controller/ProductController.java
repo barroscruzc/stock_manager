@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.univirtus.bo.CategoryBO;
 import br.com.univirtus.bo.ProductBO;
 import br.com.univirtus.model.Product;
 import jakarta.validation.Valid;
@@ -21,16 +22,21 @@ public class ProductController {
 
 	@Autowired
 	private ProductBO bo;
+	
+	@Autowired
+	private CategoryBO categoryBO;
 
 	@RequestMapping(path = "/new", method = RequestMethod.GET)
 	public ModelAndView create(ModelMap model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("categories", categoryBO.findAll());
 		return new ModelAndView("/products/form", model);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public String save(@Valid @ModelAttribute Product product, BindingResult result, RedirectAttributes attr) {
+	public String save(@Valid @ModelAttribute Product product, BindingResult result, RedirectAttributes attr, ModelMap model) {
 		if (result.hasErrors()) {
+			model.addAttribute("categories", categoryBO.findAll());
 			return "products/form";
 		} else if (product.getId() == null) {
 			bo.insert(product);
@@ -51,6 +57,7 @@ public class ProductController {
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public ModelAndView update(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("product", bo.searchById(id));
+		model.addAttribute("categories", categoryBO.findAll());
 		return new ModelAndView("/products/form", model);
 	}
 

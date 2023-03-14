@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
@@ -24,11 +25,12 @@ public class Product implements Serializable{
 	private String name;
 	private boolean active;
 	@ManyToOne
-	@JoinTable(name="id")
+	@JoinTable(name="tb_product_category",
+	joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name= "category_id"))
 	private Category category;
 	
 	public Product() {
-		
+		this.active = true;
 	}
 
 	public Product(Long id, String name, boolean active, Category category) {

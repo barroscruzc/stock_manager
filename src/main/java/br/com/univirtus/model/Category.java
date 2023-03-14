@@ -1,13 +1,18 @@
 package br.com.univirtus.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Category implements Serializable{
@@ -15,12 +20,18 @@ public class Category implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
 	@Column(nullable = false, length = 20)
 	private String name;
+	
 	private boolean active;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private Set<Product> products = new HashSet<>();
+	
 	public Category() {
-		
+		this.active = true;
 	}
 	
 	public Category(Long id, String name, boolean active) {
