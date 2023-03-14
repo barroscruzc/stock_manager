@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Product implements Serializable{
@@ -19,6 +20,7 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false, length = 20)
+	@Size(min=3, max=50, message="Nome deve conter até 20 caracteres!")
 	private String name;
 	private boolean active;
 	@ManyToOne
