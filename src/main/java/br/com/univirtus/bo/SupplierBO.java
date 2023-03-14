@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.univirtus.dao.CRUD;
 import br.com.univirtus.dao.SupplierDAO;
 import br.com.univirtus.model.Supplier;
-import br.com.univirtus.model.Supplier;
 
 public class SupplierBO implements CRUD<Supplier, Long>{
 
@@ -39,14 +38,14 @@ public class SupplierBO implements CRUD<Supplier, Long>{
 		dao.remove(client);
 	}
 	
-	public void deactivate(Supplier client) {
-		client.setActive(false);
-		dao.update(client);
+	public void deactivate(Supplier supplier) {
+		supplier.setActive(false);
+		dao.update(supplier);
 	}
 	
-	public void activate(Supplier client) {
-		client.setActive(true);
-		dao.update(client);
+	public void activate(Supplier supplier) {
+		supplier.setActive(true);
+		dao.update(supplier);
 	}
 
 }
