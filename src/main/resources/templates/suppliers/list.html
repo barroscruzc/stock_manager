@@ -14,10 +14,10 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 	<div class="container">
-		<h1>Clientes</h1>
+		<h1>Fornecedores</h1>
 		<hr>
 		<div>
-			<a class="btn btn-primary" th:href="@{/clients/new}">Novo</a>
+			<a class="btn btn-primary" th:href="@{/suppliers/new}">Novo</a>
 		</div>
 		<hr>
 		<div th:if="${!#strings.isEmpty(feedback)}"
@@ -27,24 +27,25 @@
 		<table class="table table-hover">
 		    <thead>
 		        <tr>
-		            <td><b>NOME</b></td>
-		            <td><b>DATA NASCIMENTO</b></td>
-		            <td><b>CPF</b></td>
+		            <td><b>NOME DA EMPRESA</b></td>
+		            <td><b>RAZÃO SOCIAL</b></td>
+		            <td><b>CNPJ</b></td>
 					<td></td>
 					<td></td>
 		        </tr>
 		    </thead>
 		    <tbody>
-		        <tr th:each="client : ${clients}">
-		            <td th:text="${client.name}"></td>
-		            <td th:text="${#temporals.format(client.birthDate, 'dd/MM/yyyy')}"></td>
-		            <td th:text="${client.cpf}"></td>
+		        <tr th:each="supplier : ${suppliers}">
+		            <td th:text="${supplier.companyName}"></td>
+		            <td th:text="${supplier.brand}"></td>
+		            <td th:text="${supplier.cnpj}"></td>
 		            <td>
-		            	<a class="btn btn-sm btn-secondary" th:href="@{/clients/update/{id}(id=${client.id})}">Editar</a>
+		            
+		            	<a class="btn btn-sm btn-secondary" th:href="@{/suppliers/update/{id}(id=${supplier.id})}">Editar</a>
 		            </td>
 		            <td>
-		            	<a class="btn btn-sm btn-secondary" th:if="${client.active == false}" th:href="@{/clients/activate/{id}(id=${client.id})}">Ativar</a>
-		            	<a class="btn btn-sm btn-secondary" th:unless="${client.active == false}" th:href="@{/clients/deactivate/{id}(id=${client.id})}">Inativar</a>
+		            	<a class="btn btn-sm btn-secondary" th:if="${supplier.active == false}" th:href="@{/suppliers/activate/{id}(id=${supplier.id})}">Ativar</a>
+		            	<a class="btn btn-sm btn-secondary" th:unless="${supplier.active == false}" th:href="@{/suppliers/deactivate/{id}(id=${supplier.id})}">Inativar</a>
 		            </td>
 		       </tr>
 		     </tbody>

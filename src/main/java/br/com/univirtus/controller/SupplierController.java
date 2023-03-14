@@ -51,7 +51,7 @@ public class SupplierController {
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
 	public ModelAndView update(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("supplier", bo.searchById(id));
-		return new ModelAndView("/suppliers;form", model);
+		return new ModelAndView("/suppliers/form", model);
 	}
 	
 	@RequestMapping(value="/activate/{id}", method=RequestMethod.GET)
