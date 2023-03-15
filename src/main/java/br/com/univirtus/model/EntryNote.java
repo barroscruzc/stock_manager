@@ -1,20 +1,19 @@
 package br.com.univirtus.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -28,8 +27,9 @@ public class EntryNote implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone="GMT")
-	private Instant date;
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@Column(nullable=false, name="date_time", columnDefinition = "DATETIME")
+	private LocalDateTime dateTime;
 	
 	@Transient
 	private Double total;
@@ -38,69 +38,49 @@ public class EntryNote implements Serializable{
 	@JoinColumn(name = "supplier_id", nullable=false)
 	private Supplier supplier;
 	
-	@OneToMany(mappedBy = "")
-	private Set<EntryNoteItem> items = new HashSet<>();
-	
 	public EntryNote() {
 		
-	}
-	
-	public EntryNote(Long id, Supplier supplier) {
-		super();
-		this.id = id;
-		this.date = Instant.now();
-		this.supplier = supplier;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Instant getDateTime() {
-		return date;
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
-	public void setDateTime() {
-		this.date = Instant.now();
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
+
 
 	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal() {
-		Double total = 0.0;
-		for(EntryNoteItem item : items) {
-			total += item.getSubTotal();
-		}
+
+	public void setTotal(Double total) {
 		this.total = total;
 	}
-	
+
+
 	public Supplier getSupplier() {
 		return supplier;
 	}
+
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
 
-	public Set<EntryNoteItem> getItems() {
-		return items;
-	}
-
-	public void addItem(EntryNoteItem item) {
-		this.items.add(item);
-		setTotal();
-	}
-	
-	public void removeItem(EntryNoteItem item) {
-		this.items.add(item);
-		setTotal();
-	}
 
 	@Override
 	public int hashCode() {
