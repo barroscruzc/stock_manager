@@ -12,7 +12,7 @@ public class EntryNote implements Serializable{
 	
 	private Long id;
 	private LocalDateTime dateTime;
-	private float total;
+	private Double total;
 	private Supplier supplier;
 	private Set<EntryNoteItem> items = new HashSet<>();
 	
@@ -20,21 +20,11 @@ public class EntryNote implements Serializable{
 		
 	}
 	
-	public EntryNote(Long id, LocalDateTime dateTime, float total, Supplier supplier) {
+	public EntryNote(Long id, Supplier supplier) {
 		super();
 		this.id = id;
-		this.dateTime = dateTime;
-		this.total = total;
+		this.dateTime = LocalDateTime.now();
 		this.supplier = supplier;
-	}
-
-	public EntryNote(Long id, LocalDateTime dateTime, float total, Supplier supplier, Set<EntryNoteItem> items) {
-		super();
-		this.id = id;
-		this.dateTime = dateTime;
-		this.total = total;
-		this.supplier = supplier;
-		this.items = items;
 	}
 
 	public Long getId() {
@@ -53,11 +43,15 @@ public class EntryNote implements Serializable{
 		this.dateTime = dateTime;
 	}
 
-	public float getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal() {
+		Double total = 0.0;
+		for(EntryNoteItem item : items) {
+			total += item.getSubTotal();
+		}
 		this.total = total;
 	}
 	
@@ -75,17 +69,12 @@ public class EntryNote implements Serializable{
 
 	public void addItem(EntryNoteItem item) {
 		this.items.add(item);
+		setTotal();
 	}
 	
 	public void removeItem(EntryNoteItem item) {
 		this.items.add(item);
-	}
-	
-	public boolean containsItem(EntryNoteItem item) {
-		if(items.contains(item)) {
-			return true;
-		}
-		return false;
+		setTotal();
 	}
 
 	@Override

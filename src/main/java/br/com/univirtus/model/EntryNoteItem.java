@@ -9,21 +9,21 @@ public class EntryNoteItem implements Serializable{
 	
 	private Long id;
 	private Integer quantity;
-	private float unitaryValue;
-	private float subTotal;
+	private Double unitaryValue;
+	private Double subTotal;
 	private Product product;
 	
 	public EntryNoteItem() {
 		
 	}
 
-	public EntryNoteItem(Long id, Integer quantity, float unitaryValue, float subTotal, Product product) {
+	public EntryNoteItem(Long id, Integer quantity, Product product) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
-		this.unitaryValue = unitaryValue;
-		this.subTotal = subTotal;
 		this.product = product;
+		setUnitaryValue();
+		setSubTotal();
 	}
 
 	public Long getId() {
@@ -42,20 +42,20 @@ public class EntryNoteItem implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public float getUnitaryValue() {
+	public Double getUnitaryValue() {
 		return unitaryValue;
 	}
 
-	public void setUnitaryValue(float unitaryValue) {
-		this.unitaryValue = unitaryValue;
+	public void setUnitaryValue() {
+		this.unitaryValue = this.product.getValue();
 	}
 
-	public float getSubTotal() {
+	public Double getSubTotal() {
 		return subTotal;
 	}
 
-	public void setSubTotal(float subTotal) {
-		this.subTotal = subTotal;
+	public void setSubTotal() {
+		this.subTotal = unitaryValue * quantity;
 	}
 
 	public Product getProduct() {
