@@ -1,19 +1,44 @@
 package br.com.univirtus.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
+@Entity
+@Table(name="entry_note")
 public class EntryNote implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private LocalDateTime dateTime;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone="GMT")
+	private Instant date;
+	
+	@Transient
 	private Double total;
+	
+	@ManyToOne
+	@JoinColumn(name = "supplier_id", nullable=false)
 	private Supplier supplier;
+	
+	@OneToMany(mappedBy = "")
 	private Set<EntryNoteItem> items = new HashSet<>();
 	
 	public EntryNote() {
@@ -23,7 +48,7 @@ public class EntryNote implements Serializable{
 	public EntryNote(Long id, Supplier supplier) {
 		super();
 		this.id = id;
-		this.dateTime = LocalDateTime.now();
+		this.date = Instant.now();
 		this.supplier = supplier;
 	}
 
@@ -35,12 +60,12 @@ public class EntryNote implements Serializable{
 		this.id = id;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public Instant getDateTime() {
+		return date;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime() {
+		this.date = Instant.now();
 	}
 
 	public Double getTotal() {

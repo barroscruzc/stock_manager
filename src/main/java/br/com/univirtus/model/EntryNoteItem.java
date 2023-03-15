@@ -3,10 +3,20 @@ package br.com.univirtus.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="entry_note_item")
 public class EntryNoteItem implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private Integer quantity;
 	private Double unitaryValue;
@@ -47,7 +57,7 @@ public class EntryNoteItem implements Serializable{
 	}
 
 	public void setUnitaryValue() {
-		this.unitaryValue = this.product.getValue();
+	//	this.unitaryValue = this.product.getValue();
 	}
 
 	public Double getSubTotal() {

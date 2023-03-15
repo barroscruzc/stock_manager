@@ -33,19 +33,16 @@ public class Product implements Serializable{
 	@NotNull(message="Informe a categoria!")
 	private Category category;
 	
-	private Double value;
-	
 	public Product() {
 		this.active = true;
 	}
 
-	public Product(Long id, String name, boolean active, Category category, Double value) {
+	public Product(Long id, String name, boolean active, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.active = active;
 		this.category = category;
-		this.value = value;
 	}
 
 	public Long getId() {
@@ -78,14 +75,6 @@ public class Product implements Serializable{
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public Double getValue() {
-		return value;
-	}
-
-	public void setValue(Double value) {
-		this.value = value;
 	}
 
 	@Override

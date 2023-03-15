@@ -1,15 +1,20 @@
 package br.com.univirtus.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.br.CNPJ;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +33,7 @@ public class Supplier implements Serializable{
 	@Size(min = 3, max = 20, message="Este campo deve conter entre 3 a 20 caracteres!")
 	private String brand;
 	
-	@Column(length = 50)
+	@Column(nullable=false, length = 50)
 	@NotBlank(message="Informe o nome da empresa!")
 	@Size(min = 3, max = 50, message="Nome da empresa deve conter entre 3 e 50 caracteres!")
 	private String companyName;
@@ -49,6 +54,10 @@ public class Supplier implements Serializable{
 	@Column(length=50)
 	@Email(message="Endereço de e-mail inválido!")
 	private String email;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "supplier")
+	private Set<EntryNote> entryNotes = new HashSet<>();
 	
 	private boolean active;
 	
@@ -123,6 +132,14 @@ public class Supplier implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<EntryNote> getEntryNotes() {
+		return entryNotes;
+	}
+
+	public void addEntryNotes(EntryNote entryNote) {
+		this.entryNotes.add(entryNote);
 	}
 
 	public boolean isActive() {
