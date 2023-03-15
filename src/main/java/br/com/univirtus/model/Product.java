@@ -28,7 +28,7 @@ public class Product implements Serializable{
 	private String name;
 	private boolean active;
 	@ManyToOne
-	@JoinTable(name="tb_product_category",
+	@JoinTable(name="product_category",
 	joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name= "category_id"))
 	@NotNull(message="Informe a categoria!")
 	private Category category;
