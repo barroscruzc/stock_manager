@@ -7,10 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="entry_note_item")
+@Table(name="entry_note_items")
 public class EntryNoteItem implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -18,30 +21,50 @@ public class EntryNoteItem implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private Integer quantity;
-	private Double unitaryValue;
-	private Double subTotal;
+	
+	@ManyToOne
+	@JoinColumn(name="product_id")
+	@NotNull
 	private Product product;
 	
+	@ManyToOne
+	@JoinColumn(name="entry_note_id")
+	private EntryNote entryNote;
+	
+	@NotNull(message="Informe a quantidade")
+	private Integer quantity;
+	
+	@NotNull(message="Informe o valor unitário")
+	private Double unitaryValue;
+	
+	private Double subTotal;
+
 	public EntryNoteItem() {
 		
 	}
-
-	public EntryNoteItem(Long id, Integer quantity, Product product) {
-		super();
-		this.id = id;
-		this.quantity = quantity;
-		this.product = product;
-		setUnitaryValue();
-		setSubTotal();
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public EntryNote getEntryNote() {
+		return entryNote;
+	}
+
+	public void setEntryNote(EntryNote entryNote) {
+		this.entryNote = entryNote;
 	}
 
 	public Integer getQuantity() {
@@ -56,24 +79,16 @@ public class EntryNoteItem implements Serializable{
 		return unitaryValue;
 	}
 
-	public void setUnitaryValue() {
-	//	this.unitaryValue = this.product.getValue();
+	public void setUnitaryValue(Double unitaryValue) {
+		this.unitaryValue = unitaryValue;
 	}
 
 	public Double getSubTotal() {
 		return subTotal;
 	}
 
-	public void setSubTotal() {
-		this.subTotal = unitaryValue * quantity;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setSubTotal(Double subTotal) {
+		this.subTotal = subTotal;
 	}
 
 	@Override
