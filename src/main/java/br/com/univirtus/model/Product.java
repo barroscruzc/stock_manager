@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -22,11 +24,13 @@ public class Product implements Serializable{
 	private Long id;
 	@Column(nullable = false, length = 20)
 	@Size(min=3, max=50, message="Nome deve conter até 20 caracteres!")
+	@NotBlank(message="Informe o nome do produto!")
 	private String name;
 	private boolean active;
 	@ManyToOne
 	@JoinTable(name="tb_product_category",
 	joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name= "category_id"))
+	@NotNull(message="Informe a categoria!")
 	private Category category;
 	
 	public Product() {
