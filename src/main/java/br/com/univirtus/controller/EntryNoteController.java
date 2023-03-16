@@ -45,7 +45,8 @@ public class EntryNoteController {
 			return "/entry-notes/form";
 		} else if (entryNote.getId() == null) {
 			bo.insert(entryNote);
-			attr.addFlashAttribute("feedback", "A nota de entrada foi cadastrada com sucesso!");
+			attr.addFlashAttribute("feedback", "A nota de entrada gerada com sucesso!");
+			return "/entry-notes/form";
 		} else {
 			bo.update(entryNote);
 			attr.addFlashAttribute("feedback", "Os dados da nota de entrada foram atualizados com sucesso!");
@@ -59,7 +60,7 @@ public class EntryNoteController {
 		return new ModelAndView("/entry-notes/list", model);
 	}
 	
-	@RequestMapping(value="/{id}/item", method=RequestMethod.GET)
+	@RequestMapping(path="/{id}/item", method=RequestMethod.GET)
 	public ModelAndView addProduct(@PathVariable("id") Long id, ModelMap model) {
 		EntryNoteItem item = new EntryNoteItem();
 		EntryNote entryNote = bo.searchById(id);
