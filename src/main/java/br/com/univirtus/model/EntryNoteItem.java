@@ -35,7 +35,7 @@ public class EntryNoteItem implements Serializable{
 	@NotNull(message="Informe o valor unitário")
 	private Double unitaryValue;
 	
-	private Double subTotal;
+	private Double subtotal;
 
 	public EntryNoteItem() {
 		
@@ -81,12 +81,12 @@ public class EntryNoteItem implements Serializable{
 		this.unitaryValue = unitaryValue;
 	}
 
-	public Double getSubTotal() {
-		return subTotal;
+	public Double getSubtotal() {
+		return subtotal;
 	}
 
-	public void setSubTotal(Double subTotal) {
-		this.subTotal = subTotal;
+	public void setSubtotal(Double subtotal) {
+		this.subtotal = subtotal;
 	}
 
 	@Override
