@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.univirtus.bo.EntryNoteBO;
+import br.com.univirtus.bo.EntryNoteItemBO;
 import br.com.univirtus.bo.ProductBO;
 import br.com.univirtus.bo.SupplierBO;
 import br.com.univirtus.model.EntryNote;
@@ -31,6 +32,9 @@ public class EntryNoteController {
 	@Autowired
 	private ProductBO productBO;
 	
+	@Autowired
+	private EntryNoteItemBO entryNoteItemBO;
+	
 	@RequestMapping(path = "/new", method = RequestMethod.GET)
 	public ModelAndView create(ModelMap model) {
 		model.addAttribute("entryNote", new EntryNote());
@@ -42,7 +46,10 @@ public class EntryNoteController {
 	public String save(@Valid @ModelAttribute EntryNote entryNote, BindingResult result, RedirectAttributes attr, ModelMap model) {
 		
 		if(result.hasErrors()) {
-			return "/entry-notes/form";
+			if(entryNote.getId() == null) {
+				return "redirect:/entry-notes/new";
+			}
+			return "redirect:/entry-notes/edit/" + entryNote.getId();
 		} else if (entryNote.getId() == null) {
 			bo.insert(entryNote);
 			attr.addFlashAttribute("feedback", "A nota de entrada gerada com sucesso!");
@@ -68,5 +75,22 @@ public class EntryNoteController {
 		model.addAttribute("item", item);
 		model.addAttribute("products", productBO.findAll());
 		return new ModelAndView("/entry-note-item/form", model);
+	}
+	
+	@RequestMapping(path="edit/{id}", method=RequestMethod.GET)
+	public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("entryNoteItem", new EntryNoteItem());
+		model.addAttribute("suppliers", supplierBO.findAll());
+		model.addAttribute("entryNote", bo.searchById(id));
+		model.addAttribute("items", entryNoteItemBO.listByEntryNoteId(id));
+		return new ModelAndView("/entry-notes/form", model);
+	}
+	
+	@RequestMapping(path="remove/{id}", method=RequestMethod.GET)
+	public String remove(@PathVariable("id") Long id, RedirectAttributes attr) {
+		EntryNote entryNote = bo.searchById(id);
+		bo.remove(entryNote);
+		attr.addFlashAttribute("feedback", "Nota de entrada removida com sucesso!");
+		return "redirect:/entry-notes";
 	}
 }

@@ -64,4 +64,8 @@ public class EntryNoteItemBO implements CRUD<EntryNoteItem, Long> {
 		}
 		return false;
 	}
+	
+	public List<EntryNoteItem> listByEntryNoteId(Long entryNoteId){
+		return dao.listByEntryNoteId(entryNoteId);
+	}
 }
