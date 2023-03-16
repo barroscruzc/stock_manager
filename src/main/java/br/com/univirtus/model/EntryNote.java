@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class EntryNote implements Serializable{
 	@JoinColumn(name = "supplier_id", nullable=false)
 	private Supplier supplier;
 	
-	@OneToMany(mappedBy="entryNote")
+	@OneToMany(mappedBy="entryNote", cascade = CascadeType.ALL)
 	private Set<EntryNoteItem> items = new HashSet<>();
 	
 	public EntryNote() {
