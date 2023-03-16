@@ -46,7 +46,7 @@ public class EntryNoteItemDAO implements CRUD<EntryNoteItem, Long>{
 
 	@SuppressWarnings("unchecked")
 	public List<EntryNoteItem> listByEntryNoteId(Long entryNoteId){
-		Query query = entityManager.createQuery("from EntryNoteItem eni where eni.EntryNote.id = :entryNoteId")
+		Query query = entityManager.createQuery("from EntryNoteItem e where e.entryNote.id = :entryNoteId")
 				.setParameter("entryNoteId", entryNoteId);
 		return query.getResultList();
 	}
