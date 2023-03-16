@@ -38,12 +38,12 @@
 		        <tr th:each="entryNote : ${entryNotes}">
 		            <td th:text="${entryNote.supplier.getBrand()}"></td>
 		            <td th:text="${#temporals.format(entryNote.dateTime, 'dd/MM/yyyy HH:mm')}"></td>
-		            <td th:text="${#numbers.formatDecimal(entryNote.total, 0, 'POINT', 2, 'COMMA')}"></td>
+		            <td th:text="${entryNote.total}"></td>
 		            <td>
-		            	<a class="btn btn-sm btn-secondary" th:href="@{/entry-notes/update/{id}(id=${entryNote.id})}">Editar</a>
+		            	<a class="btn btn-sm btn-secondary" th:href="@{/entry-notes/edit/{id}(id=${entryNote.id})}">Editar</a>
 		            </td>
 		            <td>
-		            	<a class="btn btn-sm btn-secondary" th:href="@{/entry-notes/remove/{id}(id=${entryNote.id})}">Remover</a>
+		            	<a class="btn btn-sm btn-secondary" th:href="@{/entry-notes/edit/{id}(id=${entryNote.id})}">Remover</a>
 		            </td>
 		       </tr>
 		     </tbody>

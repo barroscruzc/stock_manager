@@ -47,7 +47,7 @@ body {
 							class="form-control" id="dateTime" type="datetime-local"
 							th:field="*{dateTime}" /><span style="color: red"
 							th:if="${#fields.hasErrors('dateTime')}"
-							th:errors="*dateTime}"></span>
+							th:errors="*{dateTime}"></span>
 					</div>
 					<div class="col-4 mb-3">
 						<label class="form-label" for="total">Total (R$)</label> <input

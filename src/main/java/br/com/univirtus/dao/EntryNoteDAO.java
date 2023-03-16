@@ -31,12 +31,13 @@ public class EntryNoteDAO implements CRUD<EntryNote, Long>{
 
 	@Override
 	public void insert(EntryNote entryNote) {
+		entryNote.setTotal();
 		entityManager.persist(entryNote);
-		
 	}
 
 	@Override
 	public void update(EntryNote entryNote) {
+		entryNote.setTotal();
 		entityManager.merge(entryNote);
 		
 	}

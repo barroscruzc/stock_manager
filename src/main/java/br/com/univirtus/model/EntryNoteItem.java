@@ -27,6 +27,7 @@ public class EntryNoteItem implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="entry_note_id")
+	@NotNull
 	private EntryNote entryNote;
 	
 	@NotNull(message="Informe a quantidade")
@@ -35,6 +36,7 @@ public class EntryNoteItem implements Serializable{
 	@NotNull(message="Informe o valor unitário")
 	private Double unitaryValue;
 	
+	@NotNull(message="Subtotal não pode ser nulo")
 	private Double subtotal;
 
 	public EntryNoteItem() {
@@ -71,6 +73,7 @@ public class EntryNoteItem implements Serializable{
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+		setSubtotal();
 	}
 
 	public Double getUnitaryValue() {
@@ -79,14 +82,15 @@ public class EntryNoteItem implements Serializable{
 
 	public void setUnitaryValue(Double unitaryValue) {
 		this.unitaryValue = unitaryValue;
+		setSubtotal();
 	}
 
 	public Double getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(Double subtotal) {
-		this.subtotal = subtotal;
+	public void setSubtotal() {
+		this.subtotal = quantity * unitaryValue;
 	}
 
 	@Override

@@ -25,15 +25,19 @@ body {
 			<form th:action="@{/entry-note-item}" th:object="${item}"
 				method="POST">
 				<input id="id" type="hidden" th:field="*{id}" />
+				<div th:if="${!#strings.isEmpty(feedback)}"
+					class="alert alert-danger" role="alert">
+					<span th:text="${feedback}"></span>
+				</div>
 				<div class="row bg-light rounded">
 				<h5>Dados da Nota</h5>
 					<div class="col-4 mb-6">
 						<label class="form-label" for="entryNote">Número</label> 
-						<input class="form-control" id="entryNote" th:field="*{entryNote.id}" type="text" readonly />
+						<input class="form-control" id="entryNote" th:field="*{entryNote.id}" th:type="number" readonly />
 					</div>
 					<div class="col-4 mb-3">
 						<label class="form-label" for="supplier">Fornecedor</label>
-						<input class="form-control" id="supplier" th:field="*{entryNote.supplier.brand}" type="text" readonly />
+						<input class="form-control" id="supplier" th:field="*{entryNote.supplier.brand}" th:type="text" readonly />
 					</div>
 					</div>
 					<div class="row">

@@ -27,11 +27,13 @@ public class EntryNoteItemBO implements CRUD<EntryNoteItem, Long> {
 
 	@Override
 	public void insert(EntryNoteItem entryNoteItem) {
+		entryNoteItem.setSubtotal();
 		dao.insert(entryNoteItem);
 	}
 
 	@Override
 	public void update(EntryNoteItem entryNoteItem) {
+		entryNoteItem.setSubtotal();
 		dao.update(entryNoteItem);
 	}
 

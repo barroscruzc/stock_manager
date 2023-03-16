@@ -2,7 +2,9 @@ package br.com.univirtus.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -14,7 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class EntryNote implements Serializable{
@@ -29,12 +31,14 @@ public class EntryNote implements Serializable{
 	@Column(nullable=false, name="date_time", columnDefinition = "DATETIME")
 	private LocalDateTime dateTime;
 	
-	@Transient
 	private Double total;
 	
 	@ManyToOne
 	@JoinColumn(name = "supplier_id", nullable=false)
 	private Supplier supplier;
+	
+	@OneToMany(mappedBy="entryNote")
+	private Set<EntryNoteItem> items = new HashSet<>();
 	
 	public EntryNote() {
 		
@@ -61,11 +65,16 @@ public class EntryNote implements Serializable{
 
 
 	public Double getTotal() {
+		setTotal();
 		return total;
 	}
 
 
-	public void setTotal(Double total) {
+	public void setTotal() {
+		Double total = 0.0;
+		for(EntryNoteItem item : items) {
+			total += item.getSubtotal(); 
+		}
 		this.total = total;
 	}
 
@@ -78,7 +87,15 @@ public class EntryNote implements Serializable{
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
-
+	
+	public Set<EntryNoteItem> getItems() {
+		return items;
+	}
+	
+	public void addItem(EntryNoteItem item) {
+		this.items.add(item);
+		setTotal();
+	}
 
 	@Override
 	public int hashCode() {

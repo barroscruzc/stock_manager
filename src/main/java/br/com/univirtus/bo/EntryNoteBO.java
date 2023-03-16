@@ -27,14 +27,14 @@ public class EntryNoteBO implements CRUD<EntryNote, Long>{
 
 	@Override
 	public void insert(EntryNote entryNote) {
+		entryNote.setTotal();
 		dao.insert(entryNote);
-		
 	}
 
 	@Override
 	public void update(EntryNote entryNote) {
+		entryNote.setTotal();
 		dao.update(entryNote);
-		
 	}
 
 	@Override

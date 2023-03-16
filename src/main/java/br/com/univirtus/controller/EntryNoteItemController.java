@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,10 @@ import br.com.univirtus.model.EntryNote;
 import br.com.univirtus.model.EntryNoteItem;
 import jakarta.validation.Valid;
 
+
 @Controller
 @RequestMapping(path="/entry-note-item")
+@Validated
 public class EntryNoteItemController {
 
 	
@@ -40,12 +43,15 @@ public class EntryNoteItemController {
 			result.rejectValue("product", "field.required");
 		}
 		
-		if (result.hasErrors()) {
-			return "redirect:/entry-notes/" + item.getEntryNote().getId() + "/item";
-		}
+		
 		
 		EntryNote entryNote = entryNoteBO.searchById(item.getEntryNote().getId());
 		item.setEntryNote(entryNote);
+		
+		/*if (result.hasErrors()) {
+			attr.addFlashAttribute("feedback", "Não foi possível salvar as alterações no item");
+			
+		}*/
 		
 		if(item.getId() == null) {
 			bo.insert(item);

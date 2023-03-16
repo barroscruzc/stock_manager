@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/entry-notes")
+@Validated
 public class EntryNoteController {
 
 	@Autowired
@@ -79,9 +81,10 @@ public class EntryNoteController {
 	
 	@RequestMapping(path="edit/{id}", method=RequestMethod.GET)
 	public ModelAndView edit(@PathVariable("id") Long id, ModelMap model) {
+		EntryNote entryNote = bo.searchById(id);
 		model.addAttribute("entryNoteItem", new EntryNoteItem());
 		model.addAttribute("suppliers", supplierBO.findAll());
-		model.addAttribute("entryNote", bo.searchById(id));
+		model.addAttribute("entryNote", entryNote);
 		model.addAttribute("items", entryNoteItemBO.listByEntryNoteId(id));
 		return new ModelAndView("/entry-notes/form", model);
 	}
