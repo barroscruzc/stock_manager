@@ -11,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.univirtus.model.Client;
-import br.com.univirtus.model.enums.Gender;
+import br.com.stock.manager.bo.ClientBO;
+import br.com.stock.manager.model.Client;
+import br.com.stock.manager.model.enums.Gender;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
